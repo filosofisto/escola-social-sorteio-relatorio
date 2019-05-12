@@ -10,6 +10,7 @@
 	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="caminhoImagem" class="java.lang.String" isForPrompting="false"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -21,9 +22,9 @@
 	<group name="GroupCapacitacao" keepTogether="true" preventOrphanFooter="true">
 		<groupExpression><![CDATA[$F{capacitacao}]]></groupExpression>
 		<groupHeader>
-			<band height="34">
+			<band height="81">
 				<staticText>
-					<reportElement x="0" y="0" width="180" height="30" forecolor="#FF0000" uuid="bb6b47c0-9deb-4f31-92f9-0ae1e1957335">
+					<reportElement x="0" y="46" width="180" height="30" forecolor="#FF0000" uuid="bb6b47c0-9deb-4f31-92f9-0ae1e1957335">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="98b2716b-ba3b-4f16-b1ac-e69ee41c121c"/>
 					</reportElement>
 					<textElement>
@@ -32,7 +33,7 @@
 					<text><![CDATA[Área Capacitação:]]></text>
 				</staticText>
 				<textField>
-					<reportElement positionType="Float" x="180" y="0" width="475" height="30" forecolor="#FF0000" uuid="51f4681c-a354-4b75-a250-4cd6e0c1fcdc">
+					<reportElement positionType="Float" x="180" y="46" width="475" height="30" forecolor="#FF0000" uuid="51f4681c-a354-4b75-a250-4cd6e0c1fcdc">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="98b2716b-ba3b-4f16-b1ac-e69ee41c121c"/>
 					</reportElement>
 					<textElement>
@@ -40,6 +41,13 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{capacitacao}]]></textFieldExpression>
 				</textField>
+				<staticText>
+					<reportElement x="0" y="0" width="655" height="46" backcolor="#0FBA29" uuid="177c0d2c-7a2b-4920-b842-b9906e70b30b"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="16" isBold="true"/>
+					</textElement>
+					<text><![CDATA[LISTA DE SORTEADOS]]></text>
+				</staticText>
 			</band>
 		</groupHeader>
 	</group>
@@ -105,13 +113,23 @@
 					<text><![CDATA[Categoria:]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="100" y="7" width="555" height="30" uuid="f372252a-ebe0-4e78-b343-3233447f9b04">
+					<reportElement x="100" y="7" width="380" height="30" uuid="f372252a-ebe0-4e78-b343-3233447f9b04">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="22fa742e-1499-4ac0-9ada-b207f31325ad"/>
 					</reportElement>
 					<textElement>
 						<font size="16" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{categoria}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement positionType="Float" x="480" y="7" width="172" height="30" forecolor="#000000" uuid="666b6b2b-fe07-4119-bec4-9a8ce00799f2">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="98b2716b-ba3b-4f16-b1ac-e69ee41c121c"/>
+						<printWhenExpression><![CDATA["("+$F{capacitacao}+")"]]></printWhenExpression>
+					</reportElement>
+					<textElement verticalAlignment="Bottom">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{capacitacao}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -122,18 +140,18 @@
 	<title>
 		<band height="196" splitType="Stretch">
 			<staticText>
-				<reportElement x="120" y="19" width="480" height="30" uuid="ed068f79-bfcd-4922-ac41-18f2a58fd0a2"/>
+				<reportElement x="90" y="20" width="480" height="30" uuid="ed068f79-bfcd-4922-ac41-18f2a58fd0a2"/>
 				<textElement textAlignment="Center">
 					<font size="22" isBold="true"/>
 				</textElement>
 				<text><![CDATA[GOVERNO DO DISTRITO FEDERAL]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="120" y="50" width="480" height="70" uuid="f62fa1b8-70b2-4cac-b0fd-ba1272f25cc5"/>
+				<reportElement x="90" y="50" width="480" height="70" uuid="f62fa1b8-70b2-4cac-b0fd-ba1272f25cc5"/>
 				<textElement textAlignment="Center">
 					<font size="16" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Secretaria de Estado de Trabalho, Desenvolvimento Social, Mulheres, Igualdade Racial e Direitos Humanos
+				<text><![CDATA[Secretaria de Estado de Trabalho
 Subsecretaria de Integração das Ações Sociais]]></text>
 			</staticText>
 			<staticText>
@@ -143,14 +161,16 @@ Subsecretaria de Integração das Ações Sociais]]></text>
 				</textElement>
 				<text><![CDATA[Processo Seletivo Simplificado para Seleção de Participantes do Centro de Capacitação e Qualificação Profissional - Fábrica Social - 2019]]></text>
 			</staticText>
+			<image>
+				<reportElement x="0" y="20" width="82" height="90" uuid="0bd10c11-a791-4cda-a750-3a5477882c68"/>
+				<imageExpression><![CDATA["C:/Users/filos/Documents/EscolaSocial/escola-social-sorteio-relatorio/src/main/resources/images/GDF.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="570" y="20" width="82" height="90" uuid="cf087e35-4814-4a10-9d65-4a85e02e1e69"/>
+				<imageExpression><![CDATA["C:/Users/filos/Documents/EscolaSocial/escola-social-sorteio-relatorio/src/main/resources/images/escola-social.png"]]></imageExpression>
+			</image>
 		</band>
 	</title>
-	<pageHeader>
-		<band height="35" splitType="Stretch"/>
-	</pageHeader>
-	<columnHeader>
-		<band height="31" splitType="Stretch"/>
-	</columnHeader>
 	<detail>
 		<band height="21" splitType="Stretch">
 			<textField>
