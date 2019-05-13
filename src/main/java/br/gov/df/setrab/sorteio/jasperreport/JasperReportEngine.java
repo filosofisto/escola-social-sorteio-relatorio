@@ -3,10 +3,8 @@ package br.gov.df.setrab.sorteio.jasperreport;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
-import net.sf.jasperreports.export.SimpleExporterInput;
-import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
-import net.sf.jasperreports.export.SimplePdfExporterConfiguration;
-import net.sf.jasperreports.export.SimplePdfReportConfiguration;
+import net.sf.jasperreports.engine.export.JRXlsExporter;
+import net.sf.jasperreports.export.*;
 import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayOutputStream;
@@ -21,6 +19,7 @@ import java.util.Map;
 public class JasperReportEngine {
 
     public static final String CONTENT_TYPE_PDF = "application/pdf";
+    public static final String CONTENT_TYPE_XLS = "application/xls";
 
     private InputStream stream;
     private OutputStream outputStream;
@@ -71,6 +70,18 @@ public class JasperReportEngine {
         return this;
     }
 
+    public JasperReportEngine excel() throws JRException {
+        outputStream = new ByteArrayOutputStream();
+        JRXlsExporter exporter = createXlsExporter(outputStream);
+        SimpleXlsReportConfiguration reportConfiguration = createXlsReportConfiguration();
+        SimpleXlsExporterConfiguration exporterConfiguration = createXlsExportConfiguration();
+        setConfigurations(exporter, reportConfiguration, exporterConfiguration);
+        exporter.exportReport();
+        contentType = CONTENT_TYPE_XLS;
+
+        return this;
+    }
+
     public byte[] bytes() throws JRException {
         if (outputStream == null) {
             throw new JRException("outputStream null");
@@ -99,6 +110,14 @@ public class JasperReportEngine {
         exporter.setConfiguration(exporterConfiguration);
     }
 
+    private void setConfigurations(
+            JRXlsExporter exporter,
+            SimpleXlsReportConfiguration reportConfiguration,
+            SimpleXlsExporterConfiguration exporterConfiguration) {
+        exporter.setConfiguration(reportConfiguration);
+        exporter.setConfiguration(exporterConfiguration);
+    }
+
     public String getContentType() {
         return contentType;
     }
@@ -112,6 +131,14 @@ public class JasperReportEngine {
         return exporterConfiguration;
     }
 
+    private SimpleXlsExporterConfiguration createXlsExportConfiguration() {
+        SimpleXlsExporterConfiguration exporterConfiguration = new SimpleXlsExporterConfiguration();
+        exporterConfiguration.setMetadataAuthor("Fábrica Social");
+        exporterConfiguration.setKeepWorkbookTemplateSheets(true);
+
+        return exporterConfiguration;
+    }
+
     private SimplePdfReportConfiguration createPdfReportConfiguration() {
         SimplePdfReportConfiguration reportConfiguration = new SimplePdfReportConfiguration();
         reportConfiguration.setSizePageToContent(true);
@@ -120,8 +147,22 @@ public class JasperReportEngine {
         return reportConfiguration;
     }
 
+    private SimpleXlsReportConfiguration createXlsReportConfiguration() {
+        SimpleXlsReportConfiguration exporterConfiguration = new SimpleXlsReportConfiguration();
+
+        return exporterConfiguration;
+    }
+
     private JRPdfExporter createExporter(OutputStream outputStream) {
         JRPdfExporter exporter = new JRPdfExporter();
+        exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+        exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputStream));
+
+        return exporter;
+    }
+
+    private JRXlsExporter createXlsExporter(OutputStream outputStream) {
+        JRXlsExporter exporter = new JRXlsExporter();
         exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
         exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputStream));
 

@@ -2,8 +2,9 @@ package br.gov.df.setrab.sorteio;
 
 import br.gov.df.setrab.sorteio.model.Classificacao;
 import br.gov.df.setrab.sorteio.service.DataLoaderService;
-import br.gov.df.setrab.sorteio.service.PDFService;
+import br.gov.df.setrab.sorteio.service.ReportService;
 import net.sf.jasperreports.engine.JRException;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
 import org.springframework.boot.CommandLineRunner;
@@ -18,12 +19,12 @@ public class Main implements CommandLineRunner {
 
     private final DataLoaderService dataLoaderService;
 
-    private final PDFService pdfService;
+    private final ReportService reportService;
 
     @Autowired
-    public Main(DataLoaderService dataLoaderService, PDFService pdfService) {
+    public Main(DataLoaderService dataLoaderService, ReportService reportService) {
         this.dataLoaderService = dataLoaderService;
-        this.pdfService = pdfService;
+        this.reportService = reportService;
     }
 
     public static void main(String[] args) {
@@ -37,9 +38,11 @@ public class Main implements CommandLineRunner {
         try {
             List<Classificacao> classificacaoList = dataLoaderService.importData();
 
-            byte[] bytes = pdfService.generatePDF(classificacaoList);
+            byte[] bytesPDF = reportService.generatePDF(classificacaoList);
+            reportService.savePDF(bytesPDF);
 
-            pdfService.savePDF(bytes);
+            XSSFWorkbook xssfWorkbook = reportService.generateExcel(classificacaoList);
+            reportService.saveExcel(xssfWorkbook);
         } catch (IOException | JRException e) {
             e.printStackTrace();
         }

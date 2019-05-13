@@ -10,7 +10,6 @@
 	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
-	<parameter name="caminhoImagem" class="java.lang.String" isForPrompting="false"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -113,23 +112,13 @@
 					<text><![CDATA[Categoria:]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="100" y="7" width="380" height="30" uuid="f372252a-ebe0-4e78-b343-3233447f9b04">
+					<reportElement x="100" y="7" width="552" height="30" uuid="f372252a-ebe0-4e78-b343-3233447f9b04">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="22fa742e-1499-4ac0-9ada-b207f31325ad"/>
 					</reportElement>
 					<textElement>
 						<font size="16" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{categoria}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement positionType="Float" x="480" y="7" width="172" height="30" forecolor="#000000" uuid="666b6b2b-fe07-4119-bec4-9a8ce00799f2">
-						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="98b2716b-ba3b-4f16-b1ac-e69ee41c121c"/>
-						<printWhenExpression><![CDATA["("+$F{capacitacao}+")"]]></printWhenExpression>
-					</reportElement>
-					<textElement verticalAlignment="Bottom">
-						<font size="10" isBold="true"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{capacitacao}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
