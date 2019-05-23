@@ -4,7 +4,6 @@ import br.gov.df.setrab.sorteio.Helper;
 import br.gov.df.setrab.sorteio.jasperreport.JasperReportEngine;
 import br.gov.df.setrab.sorteio.model.Classificacao;
 import net.sf.jasperreports.engine.JRException;
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -34,14 +33,6 @@ public class ReportService {
                 .bytes();
     }
 
-    /*public byte[] generateExcel(List<Classificacao> classificacaoList) throws JRException {
-        return jasperReportEngine
-                .init("SorteioResultado")
-                .execute(classificacaoList)
-                .excel()
-                .bytes();
-    }*/
-
     public XSSFWorkbook generateExcel(List<Classificacao> classificacaoList) {
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet sheet = workbook.createSheet("Resultado do Sorteio");
@@ -70,6 +61,11 @@ public class ReportService {
 
     public String savePDF(byte[] bytes) throws IOException {
         String pdfFilename = Helper.curdir()+File.separator+"report.pdf";
+        return saveBytes(pdfFilename, bytes);
+    }
+
+    public String savePDF(String filename, byte[] bytes) throws IOException {
+        String pdfFilename = Helper.curdir()+File.separator+filename;
         return saveBytes(pdfFilename, bytes);
     }
 

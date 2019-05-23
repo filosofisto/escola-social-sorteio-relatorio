@@ -10,6 +10,11 @@ public class Classificacao implements Serializable {
     private String nome;
     private String cpf;
 
+    private boolean sanitizeName = true;
+
+    public Classificacao() {
+    }
+
     public Classificacao(String line) {
         String[] fields = line.split(",");
 
@@ -52,15 +57,19 @@ public class Classificacao implements Serializable {
     }
 
     private String sanitizeNome() {
-        StringBuilder builder = new StringBuilder();
+        if (sanitizeName) {
+            StringBuilder builder = new StringBuilder();
 
-        String[] tokens = nome.split(" ");
+            String[] tokens = nome.split(" ");
 
-        for (String s: tokens) {
-            builder.append(s.substring(0,1));
+            for (String s : tokens) {
+                builder.append(s.substring(0, 1));
+            }
+
+            return builder.toString();
         }
 
-        return builder.toString();
+        return nome;
     }
 
     public void setNome(String nome) {
@@ -77,6 +86,14 @@ public class Classificacao implements Serializable {
 
     public void print() {
         System.out.println(this);
+    }
+
+    public boolean isSanitizeName() {
+        return sanitizeName;
+    }
+
+    public void setSanitizeName(boolean sanitizeName) {
+        this.sanitizeName = sanitizeName;
     }
 
     @Override
